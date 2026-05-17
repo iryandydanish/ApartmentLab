@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   pull-application:
-    uses: ./.github/workflows/pull-application.yml
+    uses: ./.github/workflows/pull-website.yml
     with:
       repo: iryandydanish/danish_portfolio
       branch: main
