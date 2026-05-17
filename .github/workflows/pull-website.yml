@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  pull_external_repo:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,5 @@ jobs:
         with:
           repository: iryandydanish/danish_portfolio
           ref: main
-          path: application\portfoliowebsite\src
-          token: ${{ secrets.GH_PAT }} # use PAT that is authorized to pull wedding repo
+          path: application/portfoliowebsite/src
+          token: ${{secrets.GH_PAT }} # use PAT that is authorized to pull wedding repo

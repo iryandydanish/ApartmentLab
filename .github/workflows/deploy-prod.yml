@@ -16,6 +16,15 @@ permissions:
   id-token: write
 
 jobs:
+  pull-application:
+    uses: ./.github/workflows/pull-application.yml
+    with:
+      repo: iryandydanish/danish_portfolio
+      branch: main
+      path: application/portfoliowebsite/src
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+
   deploy-prod:
     runs-on: ubuntu-latest
 
