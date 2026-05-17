@@ -1,0 +1,22 @@
+name: get-application-repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout selfhost repo
+        uses: actions/checkout@v4
+
+      - name: Checkout 'portfolio' main branch # use this framework to pull other repos
+        uses: actions/checkout@v4
+        with:
+          repository: iryandydanish/danish_portfolio
+          ref: main
+          path: application\portfoliowebsite\src
+          token: ${{ secrets.GH_PAT }} # use PAT that is authorized to pull wedding repo

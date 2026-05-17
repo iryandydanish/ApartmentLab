@@ -1,0 +1,32 @@
+services:
+  portfoliowebsite:
+    image: nginx:${NGINX_TAG}
+    restart: unless-stopped
+    networks:
+      - edge
+    expose:
+      - "8081"
+    volumes:
+      - ../application/portfoliowebsite/src:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/api/v1/status >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+
+  portfoliowebsite_pub:
+    image: alpine/socat
+    restart: unless-stopped
+    profiles: ["preprod"]
+    networks:
+      - edge
+    ports:
+      - "80:8081"
+    command: tcp-listen:8081,fork,reuseaddr tcp-connect:portfoliowebsite:8081
+    depends_on:
+      - portfoliowebsite
+
+networks:
+  edge:
+    external: true
