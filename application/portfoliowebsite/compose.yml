@@ -7,7 +7,7 @@ services:
     expose:
       - "80"
     volumes:
-      - ../application/portfoliowebsite/src:/usr/share/nginx/html:ro
+      - ../portfoliowebsite/src:/usr/share/nginx/html:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:80 >/dev/null || exit 1"]
       interval: 30s
