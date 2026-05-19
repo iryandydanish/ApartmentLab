@@ -20,8 +20,8 @@ services:
     networks:
       - edge
     ports:
-      - "3003:3001"
-    command: tcp-listen:3001,fork,reuseaddr tcp-connect:send2ereader:3001
+      - "3003:3003"
+    command: tcp-listen:3003,fork,reuseaddr tcp-connect:send2ereader:3001
     depends_on:
       - send2ereader
 

@@ -20,8 +20,8 @@ services:
     networks:
       - edge
     ports:
-      - "3010:8080"
-    command: tcp-listen:8080,fork,reuseaddr tcp-connect:bentopdf:8080
+      - "3010"
+    command: tcp-listen:3010,fork,reuseaddr tcp-connect:bentopdf:8080
     depends_on:
       - bentopdf
 
