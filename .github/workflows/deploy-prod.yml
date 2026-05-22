@@ -53,10 +53,6 @@ jobs:
               core.setOutput("found", "false");
             }
 
-      - name: Add automatic CSS cache version
-        run: |
-          sed -i "s/__CSS_VERSION__/${GITHUB_SHA}/g" application/portfoliowebsite/src/index.html
-
       - name: Comment deployment started
         if: steps.find_pr.outputs.number != ''
         uses: actions/github-script@v7
@@ -103,6 +99,7 @@ jobs:
         shell: bash
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
+          CSS_VERSION: ${{ github.sha }}
         run: |
           set -euo pipefail
           set -o pipefail
@@ -112,7 +109,7 @@ jobs:
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             -o LogLevel=ERROR \
-            deploy@"${{ secrets.PROD_HOST }}" "GH_PAT='$GH_PAT' bash -s" << 'EOF' 2>&1 | tee deploy.log
+            deploy@"${{ secrets.PROD_HOST }}" "GH_PAT='$GH_PAT' CSS_VERSION='$CSS_VERSION' bash -s" << 'EOF' 2>&1 | tee deploy.log
             set -euo pipefail
 
             cd /apartmentlab/prod-repo/apartmentlab
@@ -122,6 +119,8 @@ jobs:
 
             rm -rf application/portfoliowebsite/src
             git clone --depth 1 --branch main "https://x-access-token:${GH_PAT}@github.com/iryandydanish/danish_portfolio.git" application/portfoliowebsite/src
+
+            sed -i "s/__CSS_VERSION__/${CSS_VERSION}/g" application/portfoliowebsite/src/index.html
 
             ./scripts/infra-down.sh
             ./scripts/infra-up.sh
