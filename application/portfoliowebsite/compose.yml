@@ -23,7 +23,7 @@ services:
       - edge
     ports:
       - "8081:8081"
-    command: tcp-listen:80,fork,reuseaddr tcp-connect:portfoliowebsite:80
+    command: tcp-listen:8081,fork,reuseaddr tcp-connect:portfoliowebsite:80
     depends_on:
       - portfoliowebsite
 
