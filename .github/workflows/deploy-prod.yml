@@ -100,6 +100,7 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
           CSS_VERSION: ${{ github.sha }}
+          PDF_VERSION: ${{ github.sha }}
         run: |
           set -euo pipefail
           set -o pipefail
@@ -109,7 +110,7 @@ jobs:
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             -o LogLevel=ERROR \
-            deploy@"${{ secrets.PROD_HOST }}" "GH_PAT='$GH_PAT' CSS_VERSION='$CSS_VERSION' bash -s" << 'EOF' 2>&1 | tee deploy.log
+            deploy@"${{ secrets.PROD_HOST }}" "GH_PAT='$GH_PAT' CSS_VERSION='$CSS_VERSION' PDF_VERSION='$PDF_VERSION' bash -s" << 'EOF' 2>&1 | tee deploy.log
             set -euo pipefail
 
             cd /apartmentlab/prod-repo/apartmentlab
@@ -121,6 +122,7 @@ jobs:
             git clone --depth 1 --branch main "https://x-access-token:${GH_PAT}@github.com/iryandydanish/danish_portfolio.git" application/portfoliowebsite/src
 
             sed -i "s/__CSS_VERSION__/${CSS_VERSION}/g" application/portfoliowebsite/src/index.html
+            sed -i "s/__PDF_VERSION__/${PDF_VERSION}/g" application/portfoliowebsite/src/index.html
 
             ./scripts/infra-down.sh
             ./scripts/infra-up.sh
