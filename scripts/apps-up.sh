@@ -18,6 +18,7 @@ if [ "$BASE_DIR" = "/apartmentlab/prod-repo/apartmentlab" ]; then
     -f application/bentopdf/compose.yml \
     -f application/send2ereader/compose.yml \
     -f application/portfoliowebsite/compose.yml \
+    -f application/calibreweb/compose.yml \
     up -d
 
   echo "Applications started in $ENV environment."
@@ -38,6 +39,7 @@ elif [ "$BASE_DIR" = "/apartmentlab/preprod-repo/apartmentlab" ]; then
     -f application/bentopdf/compose.yml \
     -f application/send2ereader/compose.yml \
     -f application/portfoliowebsite/compose.yml \
+    -f application/calibreweb/compose.yml \
     up -d
 
   echo "Applications started in $ENV environment."
