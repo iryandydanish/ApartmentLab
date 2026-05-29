@@ -1,6 +1,6 @@
 services:
   calibre-web:
-    image: lscr.io/linuxserver/calibre-web:${CALIBRE-WEB_TAG}
+    image: lscr.io/linuxserver/calibre-web:${CALIBREWEB_TAG}
     restart: unless-stopped
     networks:
       - edge
