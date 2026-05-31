@@ -8,6 +8,7 @@ services:
       - /apartmentlab/gitops/env/${ENV}/calibre-web.env
     volumes:
       - /apartmentlab/data/${ENV}/calibre-web/data:/config
+      - /apartmentlab/data/${ENV}/calibre-web/data/books:/books
     expose:
       - "8083"
     healthcheck:
