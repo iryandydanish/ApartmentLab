@@ -1,0 +1,35 @@
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:${CALIBREWEB_TAG}
+    restart: unless-stopped
+    networks:
+      - edge
+    env_file:
+      - /apartmentlab/gitops/env/${ENV}/calibre-web.env
+    volumes:
+      - /apartmentlab/data/${ENV}/calibre-web/config:/config
+      - /apartmentlab/data/${ENV}/calibre-web/books:/books
+    expose:
+      - "8083"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8083/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+
+  calibre-web_pub:
+    image: alpine/socat
+    restart: unless-stopped
+    profiles: ["preprod"]
+    networks:
+      - edge
+    ports:
+      - "3011:3011"
+    command: tcp-listen:3011,fork,reuseaddr tcp-connect:calibre-web:8083
+    depends_on:
+      - calibre-web
+
+networks:
+  edge:
+    external: true
